@@ -442,7 +442,7 @@ def export_to_csv(data, filename):
 RECIPIENT_EMAILS = [
     "momendaoud07@gmail.com",
     "momenfbi123@gmail.com",
-    "Ahmed@impoweredlab.com"
+    "ahmed@impoweredlab.com"
 ]   
 
 def send_email_notification(html_content, attachment_filename=None):
@@ -626,7 +626,7 @@ if __name__ == "__main__":
      # Start the Flask app in a separate thread
     threading.Thread(target=run_flask, daemon=True).start()
 
-    run_times = ["6:25","4:00"]  # Example: Run twice a day at 8 AM and 8 PM
+    run_times = ["6:30","4:00"]  # Example: Run twice a day at 8 AM and 8 PM
     
     schedule_scraper(run_times)
     
