@@ -442,12 +442,13 @@ def export_to_csv(data, filename):
 RECIPIENT_EMAILS = [
     "momendaoud07@gmail.com",
     "momenfbi123@gmail.com",
-    "ahmed@impoweredlab.com"
+    "Ahmed@impoweredlab.com"
 ]   
 
 def send_email_notification(html_content, attachment_filename=None):
     # Email configuration
     sender_email = "impoweredlab@gmail.com"  # Replace with your Gmail address
+    receiver_email = "momenfbi123@gmail.com"  # Replace with the procurement team's email
     password = "yicc hbck atdu dlkm"  # Replace with your Gmail app password
 
     # Create message
@@ -626,7 +627,7 @@ if __name__ == "__main__":
      # Start the Flask app in a separate thread
     threading.Thread(target=run_flask, daemon=True).start()
 
-    run_times = ["6:30","4:00"]  # Example: Run twice a day at 8 AM and 8 PM
+    run_times = ["04:00","18:50"]  # Example: Run twice a day at 8 AM and 8 PM
     
     schedule_scraper(run_times)
     
