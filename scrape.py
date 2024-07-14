@@ -1,6 +1,8 @@
 
 import json
 import requests
+from flask import Flask
+import threading
 import re
 import os
 from bs4 import BeautifulSoup
@@ -43,6 +45,14 @@ CONDITION_PRIORITY = ["NS", "NE", "OH", "SV", "AR", "RP", "Mid-Life"]
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+app = Flask(__name__)
+
+@app.route('/')
+def health_check():
+    return "Scraper is running", 200
+
+def run_flask():
+    app.run(host='0.0.0.0', port=8080)
 
 # Utility functions
 def get_soup(url):
@@ -600,7 +610,10 @@ def schedule_scraper(run_times):
         logging.info(f"Scheduled scraping for {run_time}")
 
 if __name__ == "__main__":
-    run_times = ["20:37"]  # Example: Run twice a day at 8 AM and 8 PM
+     # Start the Flask app in a separate thread
+    threading.Thread(target=run_flask, daemon=True).start()
+
+    run_times = ["21:31"]  # Example: Run twice a day at 8 AM and 8 PM
     
     schedule_scraper(run_times)
     
