@@ -46,7 +46,6 @@ DESIRED_ENGINES = [
 CONDITION_PRIORITY = ["NS", "NE", "OH", "SV", "AR", "RP", "Mid-Life"]
 
 app = Flask(__name__)
-scheduler = BackgroundScheduler()
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
