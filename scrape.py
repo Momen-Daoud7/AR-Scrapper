@@ -440,9 +440,9 @@ def export_to_csv(data, filename):
     logging.info(f"Data exported to {filename}") 
 
 RECIPIENT_EMAILS = [
-    "momendaoud07@gmail.com",
+    "ceo@arengineering.tech",
     "momenfbi123@gmail.com",
-    "Ahmed@impoweredlab.com"
+    "ahmed@impoweredlab.com"
 ]   
 
 def send_email_notification(html_content, attachment_filename=None):
