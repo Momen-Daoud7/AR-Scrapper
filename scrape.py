@@ -1,5 +1,9 @@
 
 import json
+from flask import Flask, jsonify
+from apscheduler.schedulers.background import BackgroundScheduler
+from datetime import datetime
+import logging
 import requests
 import re
 import os
@@ -13,6 +17,8 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
 import schedule
 import time
+from flask import Flask, jsonify
+from threading import Thread
 
 # Configuration
 VALID_ENGINES = [
@@ -40,6 +46,8 @@ DESIRED_ENGINES = [
 
 CONDITION_PRIORITY = ["NS", "NE", "OH", "SV", "AR", "RP", "Mid-Life"]
 
+app = Flask(__name__)
+scheduler = BackgroundScheduler()
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -468,9 +476,6 @@ def send_email_notification(html_content, attachment_filename=None):
 # Example usage in main execution:
 # send_email_notification(email_content, filename if new_engines else None)
 
-import json
-import os
-from datetime import datetime
 
 STORAGE_FILE = 'engine_data_storage.json'
 
@@ -526,13 +531,7 @@ def compare_and_update(new_data):
     
     return updates, list(removed_engine_ids)
 
-import schedule
-import time
-from datetime import datetime
-import logging
 
-# Import your existing functions here
-# from your_module import scrape_aeroconnect, scrape_locatory, scrape_myairtrade, compare_and_update, export_to_csv, send_email_notification
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 def get_color_coded_status(source, count):
@@ -549,7 +548,15 @@ def get_update_summary(updates, removed_count):
     summary.append(f"Removed: {removed_count} engines removed")
     return summary
 
+app = Flask(__name__)
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+last_run_time = None
+last_run_result = None
+
 def run_scraper():
+    global last_run_time, last_run_result
     logging.info("Starting engine data scraping...")
     
     all_engine_data = []
@@ -586,26 +593,45 @@ def run_scraper():
             # Send email without attachment
             send_email_notification(email_content)
         
-        logging.info(f"Scrape completed. {len(new_engines)} new engines found, {len(removed_engines)} engines removed.")
+        last_run_result = f"Scrape completed. {len(new_engines)} new engines found, {len(removed_engines)} engines removed."
     else:
-        logging.warning("No engine data scraped from any source")
+        last_run_result = "No engine data scraped from any source"
 
-    logging.info("Scraping process completed")
+    last_run_time = datetime.now()
+    logging.info(last_run_result)
 
 def schedule_scraper(run_times):
-    schedule.clear()
-
     for run_time in run_times:
         schedule.every().day.at(run_time).do(run_scraper)
         logging.info(f"Scheduled scraping for {run_time}")
 
-if __name__ == "__main__":
-    run_times = ["15:56"]  # Example: Run twice a day at 8 AM and 8 PM
-    
-    schedule_scraper(run_times)
-    
-    logging.info("Scraper scheduled. Running continuously...")
-    
+@app.route('/')
+def home():
+    return "Engine Scraper is running."
+
+@app.route('/status')
+def status():
+    return jsonify({
+        'last_run_time': last_run_time.isoformat() if last_run_time else None,
+        'last_run_result': last_run_result
+    })
+
+@app.route('/run-now')
+def run_now():
+    Thread(target=run_scraper).start()
+    return jsonify({'message': 'Scraper run initiated'})
+
+def run_schedule():
     while True:
         schedule.run_pending()
-        time.sleep(60)  # Check every minute
+        time.sleep(60)
+
+if __name__ == "__main__":
+    run_times = ["16:56"]  # Example: Run twice a day at 8 AM and 8 PM
+    schedule_scraper(run_times)
+    
+    # Start the scheduling in a separate thread
+    Thread(target=run_schedule).start()
+    
+    # Run the Flask app
+    app.run(host='0.0.0.0', port=8080)
