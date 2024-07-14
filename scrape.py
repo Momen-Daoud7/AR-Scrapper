@@ -46,6 +46,7 @@ CONDITION_PRIORITY = ["NS", "NE", "OH", "SV", "AR", "RP", "Mid-Life"]
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 app = Flask(__name__)
+TIMEZONE = 'Africa/Khartoum'  # For Sudan time
 
 @app.route('/')
 def health_check():
@@ -436,19 +437,24 @@ def export_to_csv(data, filename):
         for item in data:
             writer.writerow({k: item.get(k, 'N/A') for k in fieldnames})
 
-    logging.info(f"Data exported to {filename}")    
+    logging.info(f"Data exported to {filename}") 
+
+RECIPIENT_EMAILS = [
+    "momendaoud07@gmail.com",
+    "momenfbi123@gmail.com",
+    "Ahmed@impoweredlab.com"
+]   
 
 def send_email_notification(html_content, attachment_filename=None):
     # Email configuration
     sender_email = "impoweredlab@gmail.com"  # Replace with your Gmail address
-    receiver_email = "momenfbi123@gmail.com"  # Replace with the procurement team's email
     password = "yicc hbck atdu dlkm"  # Replace with your Gmail app password
 
     # Create message
     message = MIMEMultipart("mixed")
-    message["Subject"] = f"Engine Scrape Results - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+    message["Subject"] = f"Engine Scrape Results"
     message["From"] = sender_email
-    message["To"] = receiver_email
+    message["To"] = ", ".join(RECIPIENT_EMAILS)  # Join all recipients with commas
 
     # Attach HTML content
     html_part = MIMEText(html_content, "html")
@@ -465,17 +471,16 @@ def send_email_notification(html_content, attachment_filename=None):
     try:
         server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
         server.login(sender_email, password)
-        server.sendmail(sender_email, receiver_email, message.as_string())
+        server.sendmail(sender_email, RECIPIENT_EMAILS, message.as_string())
         server.close()
-        print("Email notification sent successfully!")
+        logging.info("Email notification sent successfully to all recipients!")
         if attachment_filename:
-            print(f"CSV file '{attachment_filename}' was attached to the email.")
+            logging.info(f"CSV file '{attachment_filename}' was attached to the email.")
         else:
-            print("No CSV file was attached to the email.")
+            logging.info("No CSV file was attached to the email.")
     except Exception as e:
-        print(f"Error sending email notification: {e}")
+        logging.error(f"Error sending email notification: {e}")
 
-# Example usage in main execution:
 # send_email_notification(email_content, filename if new_engines else None)
 
 import json
@@ -590,8 +595,16 @@ def run_scraper():
             filename = f"new_engines_{timestamp}.csv"
             export_to_csv(new_engines, filename)
             
-            # Send email with attachment
-            send_email_notification(email_content, filename)
+            try:
+                # Send email with attachment
+                send_email_notification(email_content, filename)
+            finally:
+                # Delete the CSV file, regardless of whether the email was sent successfully
+                if os.path.exists(filename):
+                    os.remove(filename)
+                    logging.info(f"Deleted CSV file: {filename}")
+                else:
+                    logging.warning(f"CSV file not found for deletion: {filename}")
         else:
             # Send email without attachment
             send_email_notification(email_content)
@@ -613,7 +626,7 @@ if __name__ == "__main__":
      # Start the Flask app in a separate thread
     threading.Thread(target=run_flask, daemon=True).start()
 
-    run_times = ["17:40"]  # Example: Run twice a day at 8 AM and 8 PM
+    run_times = ["6:25","4:00"]  # Example: Run twice a day at 8 AM and 8 PM
     
     schedule_scraper(run_times)
     
