@@ -625,7 +625,7 @@ def run_schedule():
         time.sleep(60)
 
 if __name__ == "__main__":
-    run_times = ["16:56"]  # Example: Run twice a day at 8 AM and 8 PM
+    run_times = ["17:56"]  # Example: Run twice a day at 8 AM and 8 PM
     schedule_scraper(run_times)
     
     # Start the scheduling in a separate thread
