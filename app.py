@@ -1,7 +1,6 @@
 
 import json
 from flask import Flask, jsonify
-from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime
 import logging
 import requests
