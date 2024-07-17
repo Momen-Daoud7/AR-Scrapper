@@ -418,6 +418,52 @@ def scrape_locatory():
     logging.info(f"Scraped and standardized {len(standardized_data)} engine listings from Locatory")
     return standardized_data
 
+
+def scrape_s7aerospace():
+    url = "https://s7aerospace.com/?s=CFM56"
+    logging.info(f"Fetching S7 Aerospace page: {url}")
+    
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        soup = BeautifulSoup(response.text, 'html.parser')
+        
+        engine_data = []
+        articles = soup.find_all('article', class_='fl-post')
+        
+        for article in articles:
+            title_elem = article.find('h2', class_='fl-post-title')
+            if title_elem and title_elem.a:
+                engine_model = title_elem.a.text.strip()
+                listing_link = title_elem.a['href']
+                
+                engine_data.append({
+                    'Engine Mode': engine_model,
+                    'Condition': 'N/A',
+                    'Thrust Rating': 'N/A',
+                    'TSN': 'N/A',
+                    'CSN': 'N/A',
+                    'TSO': 'N/A',
+                    'CSO': 'N/A',
+                    'Location': 'N/A',
+                    'Availability': 'N/A',
+                    'Documentation': 'N/A',
+                    'Last Shop Visit': 'N/A',
+                    'Price': 'N/A',
+                    'Contact Information': 'N/A',
+                    'Listing Source': 'S7 Aerospace',
+                    'Listing Link': listing_link,
+                    'Date Found': datetime.now().strftime("%Y-%m-%d"),
+                    'For Sale': 'Yes'
+                })
+        
+        logging.info(f"Scraped {len(engine_data)} engine listings from S7 Aerospace")
+        return engine_data
+    
+    except requests.RequestException as e:
+        logging.error(f"Error fetching S7 Aerospace page: {e}")
+        return []
+    
 # Export function
 def export_to_csv(data, filename):
     if not data:
@@ -440,9 +486,9 @@ def export_to_csv(data, filename):
     logging.info(f"Data exported to {filename}") 
 
 RECIPIENT_EMAILS = [
-    "ceo@arengineering.tech",
+    # "ceo@arengineering.tech",
     "momenfbi123@gmail.com",
-    "ahmed@impoweredlab.com"
+    # "ahmed@impoweredlab.com"
 ]   
 
 def send_email_notification(html_content, attachment_filename=None):
@@ -494,7 +540,7 @@ def generate_unique_id(engine):
     # Combine multiple fields to create a unique identifier
     unique_fields = [
         engine.get('Engine Mode', ''),
-        engine.get('ESN', ''),  # If available
+        engine.get('ESN', '') ,  # If available
         engine.get('Location', ''),
         engine.get('Contact', ''),
         engine.get('Listing Source', ''),
@@ -527,25 +573,25 @@ def compare_and_update(new_data):
     updates = {
         'Aeroconnect': [],
         'Locatory': [],
-        'MyAirTrade': []
+        'MyAirTrade': [],
+        'S7 Aerospace': []
     }
     
     # Process new engines
     for engine in new_data:
         unique_id = generate_unique_id(engine)
         if unique_id in new_engine_ids:
-            updates[engine['Listing Source']].append(engine)
+            source = engine['Listing Source']
+            if source in updates:
+                updates[source].append(engine)
+            else:
+                logging.warning(f"Unknown source: {source}")
     
     # Update stored data
     new_stored_data = {generate_unique_id(engine): engine for engine in new_data}
     save_data(new_stored_data)
     
     return updates, list(removed_engine_ids)
-
-import schedule
-import time
-from datetime import datetime
-import logging
 
 # Import your existing functions here
 # from your_module import scrape_aeroconnect, scrape_locatory, scrape_myairtrade, compare_and_update, export_to_csv, send_email_notification
@@ -565,6 +611,7 @@ def get_update_summary(updates, removed_count):
     summary.append(f"Removed: {removed_count} engines removed")
     return summary
 
+
 def run_scraper():
     logging.info("Starting engine data scraping...")
     
@@ -579,6 +626,10 @@ def run_scraper():
     myairtrade_data = scrape_myairtrade()
     all_engine_data.extend(myairtrade_data)
     
+    s7aerospace_data = scrape_s7aerospace()  # New scraper
+    all_engine_data.extend(s7aerospace_data)
+    print(all_engine_data)
+    
     if all_engine_data:
         updates, removed_engines = compare_and_update(all_engine_data)
         summary = get_update_summary(updates, len(removed_engines))
@@ -587,7 +638,7 @@ def run_scraper():
         email_content = "<h2>Engine Scrape Results:</h2><ul>"
         for status in summary:
             email_content += f"<li>{status}</li>"
-        email_content += f"</ul><p>Scrape Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</p>"
+            
         
         # Prepare CSV with only new engines
         new_engines = [engine for engines in updates.values() for engine in engines]
