@@ -57,16 +57,21 @@ def run_flask():
 
 # Utility functions
 def get_soup(url):
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.5',
+        'Referer': 'https://www.google.com/',
+        'DNT': '1',
+        'Connection': 'keep-alive',
+        'Upgrade-Insecure-Requests': '1',
+    }
     try:
-        response = requests.get(url)
+        response = requests.get(url, headers=headers)
         response.raise_for_status()
         html_content = response.text
         
         logging.info(f"Fetched {len(html_content)} characters from {url}")
-        
-        # with open('full_page_content.html', 'w', encoding='utf-8') as f:
-        #     f.write(html_content)
-        # logging.info(f"Full HTML content saved to full_page_content.html")
         
         soup = BeautifulSoup(html_content, 'html.parser')
         
@@ -210,6 +215,69 @@ def get_engine_details(url):
     engine_data['Source'] = 'Aeroconnect'
     engine_data['URL'] = url
     return engine_data
+
+def scrape_trade_a_plane():
+    url = "https://www.trade-a-plane.com/filtered/search?s-type=engine&s-keyword-search=CFM56&s-original-search=CFM56"
+    logging.info(f"Fetching Trade-A-Plane page: {url}")
+    
+    soup = get_soup(url)
+    if not soup:
+        logging.error("Failed to fetch Trade-A-Plane page")
+        return []
+
+    engine_data = []
+    listings = soup.find_all('div', class_='result_listing')
+
+    for listing in listings:
+        try:
+            engine_model = listing.find('h3').text.strip()
+            status = "For Sale" if "For Sale" in engine_model else "Not specified"
+            engine_model = engine_model.replace("(For Sale)", "").strip()
+
+            price = listing.find('span', class_='callforprice').text.strip()
+            condition = listing.find('div', class_='txt-reg-num').text.replace('CONDITION:', '').strip()
+            tt = listing.find('div', class_='txt-total-time').text.replace('TT:', '').strip()
+
+            description = listing.find('p', class_='description').text.strip()
+            tsn_match = re.search(r'Time Since New: ([\d,.]+)', description)
+            csn_match = re.search(r'Cycle Since New: (\d+)', description)
+
+            tsn = tsn_match.group(1) if tsn_match else 'Not Listed'
+            csn = csn_match.group(1) if csn_match else 'Not Listed'
+
+            location = listing.find('p', class_='address').text.strip()
+            seller = listing.find('div', class_='result_options').find('a').text.strip()
+            
+            listing_link = listing.find('a', class_='log_listing_click')['href']
+            full_link = f"https://www.trade-a-plane.com{listing_link}"
+
+            phone = listing.find('span', itemprop='telephone').text.strip()
+
+            last_update = listing.find('p', class_='last-update').text.replace('Last Update:', '').strip()
+
+            engine_data.append({
+                'Engine Mode': engine_model,
+                'Condition': condition,
+                'TSN': tsn,
+                'CSN': csn,
+                'Location': location,
+                'Price': price,
+                'Seller': seller,
+                'Phone': phone,
+                'Listing Link': full_link,
+                'Listing Source': 'Trade-A-Plane',
+                'Last Update': last_update,
+                'Status': status
+            })
+
+            time.sleep(2) 
+
+        except Exception as e:
+            logging.error(f"Error processing Trade-A-Plane listing: {e}")
+
+    logging.info(f"Scraped {len(engine_data)} engine listings from Trade-A-Plane")
+    return engine_data
+
 
 def scrape_aeroconnect():
     base_url = "https://www.aeroconnect.com/listings-for-sale-or-lease/engines/cfm56-7b/"
@@ -574,7 +642,8 @@ def compare_and_update(new_data):
         'Aeroconnect': [],
         'Locatory': [],
         'MyAirTrade': [],
-        'S7 Aerospace': []
+        'S7 Aerospace': [],
+        'Trade-A-Plane': [] 
     }
     
     # Process new engines
@@ -626,9 +695,11 @@ def run_scraper():
     myairtrade_data = scrape_myairtrade()
     all_engine_data.extend(myairtrade_data)
     
-    s7aerospace_data = scrape_s7aerospace()  # New scraper
+    s7aerospace_data = scrape_s7aerospace()
     all_engine_data.extend(s7aerospace_data)
-    print(all_engine_data)
+    
+    trade_a_plane_data = scrape_trade_a_plane()  # New scraper
+    all_engine_data.extend(trade_a_plane_data)
     
     if all_engine_data:
         updates, removed_engines = compare_and_update(all_engine_data)
@@ -676,12 +747,15 @@ def schedule_scraper(run_times):
 
 if __name__ == "__main__":
      # Start the Flask app in a separate thread
+
     threading.Thread(target=run_flask, daemon=True).start()
 
-    run_times = ["04:00"]  # Example: Run twice a day at 8 AM and 8 PM
+    run_times = ["17:32"]  # Example: Run twice a day at 8 AM and 8 PM
     
     schedule_scraper(run_times)
     
+    # trade_a_plane_data = scrape_trade_a_plane()  # New scraper
+    # print(trade_a_plane_data)
     logging.info("Scraper scheduled. Running continuously...")
     
     while True:
