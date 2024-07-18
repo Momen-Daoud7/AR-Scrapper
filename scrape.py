@@ -791,7 +791,7 @@ if __name__ == "__main__":
     
         threading.Thread(target=run_flask, daemon=True).start()
 
-        run_times = ["18:57"]  # Example: Run twice a day at 8 AM and 8 PM
+        run_times = ["14:59"]  # Example: Run twice a day at 8 AM and 8 PM
         
         schedule_scraper(run_times)
         
