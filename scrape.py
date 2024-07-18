@@ -592,9 +592,9 @@ def export_to_csv(data, filename):
     logging.info(f"Data exported to {filename}") 
 
 RECIPIENT_EMAILS = [
-    # "ceo@arengineering.tech",
+    "ceo@arengineering.tech",
     "momenfbi123@gmail.com",
-    # "ahmed@impoweredlab.com"
+    "ahmed@impoweredlab.com"
 ]   
 
 def send_email_notification(html_content, attachment_filename=None):
@@ -791,7 +791,7 @@ if __name__ == "__main__":
     
         threading.Thread(target=run_flask, daemon=True).start()
 
-        run_times = ["15:07"]  # Example: Run twice a day at 8 AM and 8 PM
+        run_times = ["04:00"]  # Example: Run twice a day at 8 AM and 8 PM
         
         schedule_scraper(run_times)
         
