@@ -1,4 +1,3 @@
-
 import json
 import requests
 from flask import Flask
@@ -60,17 +59,18 @@ def run_flask():
     app.run(host='0.0.0.0', port=8080)
 
     
-def retry_with_backoff(func, max_retries=3, base_delay=1):
-    for attempt in range(max_retries):
+def scrape_with_backoff(url, max_retries=5, base_delay=1):
+    for i in range(max_retries):
         try:
-            return func()
-        except RequestException as e:
-            if attempt == max_retries - 1:
-                raise
-            delay = base_delay * (2 ** attempt)
-            logging.warning(f"Request failed: {e}. Retrying in {delay} seconds...")
-            time.sleep(delay)
-
+            soup = get_soup(url)
+            if soup:
+                return soup
+        except Exception as e:
+            wait_time = (base_delay * (2 ** i)) + (random.randint(0, 1000) / 1000)
+            logging.warning(f"Attempt {i+1} failed. Waiting for {wait_time:.2f} seconds. Error: {e}")
+            time.sleep(wait_time)
+    logging.error(f"Failed to scrape {url} after {max_retries} attempts")
+    return None
 # Utility functions
 
 USER_AGENTS = [
@@ -733,11 +733,11 @@ def run_scraper():
     myairtrade_data = scrape_myairtrade()
     all_engine_data.extend(myairtrade_data)
     
-    s7aerospace_data = scrape_s7aerospace()
-    all_engine_data.extend(s7aerospace_data)
+    # s7aerospace_data = scrape_s7aerospace()
+    # all_engine_data.extend(s7aerospace_data)
     
-    trade_a_plane_data = scrape_trade_a_plane()  # New scraper
-    all_engine_data.extend(trade_a_plane_data)
+    # trade_a_plane_data = scrape_trade_a_plane()  # New scraper
+    # all_engine_data.extend(trade_a_plane_data)
     
     if all_engine_data:
         updates, removed_engines = compare_and_update(all_engine_data)
@@ -804,7 +804,7 @@ if __name__ == "__main__":
     try:
         threading.Thread(target=run_flask, daemon=True).start()
 
-        run_times = ["14:05"]  # Example: Run twice a day at 8 AM and 8 PM
+        run_times = ["14:27"]  # Example: Run twice a day at 8 AM and 8 PM
         
         schedule_scraper(run_times)
         
