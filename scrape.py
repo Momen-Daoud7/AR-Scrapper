@@ -15,6 +15,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
 import schedule
 import time
+from requests.exceptions import RequestException
 
 # Configuration
 VALID_ENGINES = [
@@ -55,10 +56,23 @@ def health_check():
 def run_flask():
     app.run(host='0.0.0.0', port=8080)
 
+    
+def retry_with_backoff(func, max_retries=3, base_delay=1):
+    for attempt in range(max_retries):
+        try:
+            return func()
+        except RequestException as e:
+            if attempt == max_retries - 1:
+                raise
+            delay = base_delay * (2 ** attempt)
+            logging.warning(f"Request failed: {e}. Retrying in {delay} seconds...")
+            time.sleep(delay)
+
 # Utility functions
 def get_soup(url):
     headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+        # 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+        'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:89.0) Gecko/20100101 Firefox/89.0',
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
         'Accept-Language': 'en-US,en;q=0.5',
         'Referer': 'https://www.google.com/',
@@ -220,7 +234,7 @@ def scrape_trade_a_plane():
     url = "https://www.trade-a-plane.com/filtered/search?s-type=engine&s-keyword-search=CFM56&s-original-search=CFM56"
     logging.info(f"Fetching Trade-A-Plane page: {url}")
     
-    soup = get_soup(url)
+    soup = retry_with_backoff(lambda: get_soup(url))
     if not soup:
         logging.error("Failed to fetch Trade-A-Plane page")
         return []
@@ -754,8 +768,8 @@ if __name__ == "__main__":
     
     schedule_scraper(run_times)
     
-    # trade_a_plane_data = scrape_trade_a_plane()  # New scraper
-    # print(trade_a_plane_data)
+    trade_a_plane_data = scrape_trade_a_plane()  # New scraper
+    print(trade_a_plane_data)
     logging.info("Scraper scheduled. Running continuously...")
     
     while True:
