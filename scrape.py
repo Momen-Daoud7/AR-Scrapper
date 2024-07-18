@@ -3,6 +3,8 @@ import json
 import requests
 from flask import Flask
 import threading
+import fcntl
+import sys
 import re
 import os
 from bs4 import BeautifulSoup
@@ -780,20 +782,38 @@ def schedule_scraper(run_times):
     for run_time in run_times:
         schedule.every().day.at(run_time).do(run_scraper)
         logging.info(f"Scheduled scraping for {run_time}")
+def acquire_lock():
+    lock_file = open("scraper_lock", "w")
+    try:
+        fcntl.lockf(lock_file, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        return lock_file
+    except IOError:
+        return None
+
+def release_lock(lock_file):
+    fcntl.lockf(lock_file, fcntl.LOCK_UN)
+    lock_file.close()
 
 if __name__ == "__main__":
+    lock = acquire_lock()
+    if not lock:
+        print("Another instance is already running. Exiting.")
+        sys.exit(1)
      # Start the Flask app in a separate thread
 
-    threading.Thread(target=run_flask, daemon=True).start()
+    try:
+        threading.Thread(target=run_flask, daemon=True).start()
 
-    run_times = ["14:05"]  # Example: Run twice a day at 8 AM and 8 PM
-    
-    schedule_scraper(run_times)
-    
-    trade_a_plane_data = scrape_trade_a_plane()  # New scraper
-    print(trade_a_plane_data)
-    logging.info("Scraper scheduled. Running continuously...")
-    
-    while True:
-        schedule.run_pending()
-        time.sleep(60)  # Check every minute
+        run_times = ["14:05"]  # Example: Run twice a day at 8 AM and 8 PM
+        
+        schedule_scraper(run_times)
+        
+        trade_a_plane_data = scrape_trade_a_plane()  # New scraper
+        print(trade_a_plane_data)
+        logging.info("Scraper scheduled. Running continuously...")
+        
+        while True:
+            schedule.run_pending()
+            time.sleep(60)  # Check every minute
+    finally:
+        release_lock(lock)
