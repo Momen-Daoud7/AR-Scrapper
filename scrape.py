@@ -15,6 +15,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
 import schedule
 import time
+import random
 from requests.exceptions import RequestException
 
 # Configuration
@@ -69,10 +70,18 @@ def retry_with_backoff(func, max_retries=3, base_delay=1):
             time.sleep(delay)
 
 # Utility functions
+
+USER_AGENTS = [
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.1 Safari/605.1.15',
+    'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:89.0) Gecko/20100101 Firefox/89.0'
+]
 def get_soup(url):
     headers = {
         # 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-        'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:89.0) Gecko/20100101 Firefox/89.0',
+        'User-Agent': random.choice(USER_AGENTS),
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
         'Accept-Language': 'en-US,en;q=0.5',
         'Referer': 'https://www.google.com/',
@@ -98,6 +107,19 @@ def get_soup(url):
     except requests.RequestException as e:
         logging.error(f"Error fetching {url}: {e}")
         return None
+
+def scrape_with_backoff(url, max_retries=5):
+    for i in range(max_retries):
+        try:
+            soup = get_soup(url)
+            if soup:
+                return soup
+        except Exception as e:
+            wait_time = (2 ** i) + random.random()
+            logging.warning(f"Attempt {i+1} failed. Waiting for {wait_time:.2f} seconds. Error: {e}")
+            time.sleep(wait_time)
+    logging.error(f"Failed to scrape {url} after {max_retries} attempts")
+    return None
 
 def get_condition_priority(condition):
     try:
@@ -234,7 +256,7 @@ def scrape_trade_a_plane():
     url = "https://www.trade-a-plane.com/filtered/search?s-type=engine&s-keyword-search=CFM56&s-original-search=CFM56"
     logging.info(f"Fetching Trade-A-Plane page: {url}")
     
-    soup = retry_with_backoff(lambda: get_soup(url))
+    soup = scrape_with_backoff(url)
     if not soup:
         logging.error("Failed to fetch Trade-A-Plane page")
         return []
