@@ -795,8 +795,7 @@ if __name__ == "__main__":
         
         schedule_scraper(run_times)
         
-        trade_a_plane_data = scrape_trade_a_plane()  # New scraper
-        print(trade_a_plane_data)
+        
         logging.info("Scraper scheduled. Running continuously...")
         
         while True:
