@@ -2,7 +2,7 @@ import json
 import requests
 from flask import Flask
 import threading
-import fcntl
+# import fcntl
 import sys
 import re
 import os
@@ -733,11 +733,11 @@ def run_scraper():
     myairtrade_data = scrape_myairtrade()
     all_engine_data.extend(myairtrade_data)
     
-    # s7aerospace_data = scrape_s7aerospace()
-    # all_engine_data.extend(s7aerospace_data)
+    s7aerospace_data = scrape_s7aerospace()
+    all_engine_data.extend(s7aerospace_data)
     
-    # trade_a_plane_data = scrape_trade_a_plane()  # New scraper
-    # all_engine_data.extend(trade_a_plane_data)
+    trade_a_plane_data = scrape_trade_a_plane()  # New scraper
+    all_engine_data.extend(trade_a_plane_data)
     
     if all_engine_data:
         updates, removed_engines = compare_and_update(all_engine_data)
@@ -782,29 +782,16 @@ def schedule_scraper(run_times):
     for run_time in run_times:
         schedule.every().day.at(run_time).do(run_scraper)
         logging.info(f"Scheduled scraping for {run_time}")
-def acquire_lock():
-    lock_file = open("scraper_lock", "w")
-    try:
-        fcntl.lockf(lock_file, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        return lock_file
-    except IOError:
-        return None
-
-def release_lock(lock_file):
-    fcntl.lockf(lock_file, fcntl.LOCK_UN)
-    lock_file.close()
 
 if __name__ == "__main__":
-    lock = acquire_lock()
-    if not lock:
-        print("Another instance is already running. Exiting.")
-        sys.exit(1)
+    
+    
      # Start the Flask app in a separate thread
 
-    try:
+    
         threading.Thread(target=run_flask, daemon=True).start()
 
-        run_times = ["14:27"]  # Example: Run twice a day at 8 AM and 8 PM
+        run_times = ["18:47"]  # Example: Run twice a day at 8 AM and 8 PM
         
         schedule_scraper(run_times)
         
@@ -815,5 +802,4 @@ if __name__ == "__main__":
         while True:
             schedule.run_pending()
             time.sleep(60)  # Check every minute
-    finally:
-        release_lock(lock)
+    
