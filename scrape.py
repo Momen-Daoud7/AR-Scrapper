@@ -24,12 +24,7 @@ import schedule
 import time
 import random
 from requests.exceptions import RequestException
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
+
 # Configuration
 VALID_ENGINES = [
     "CFM56-3B1", "CFM56-3B2", "CFM56-3C1", "CFM56-5A1", "CFM56-5A3",
@@ -72,14 +67,15 @@ def run_flask():
     
 
 
-
+urllib3.disable_warnings(category=urllib3.exceptions.InsecureRequestWarning)
 
 def scrape_with_backoff(url, max_retries=5, base_delay=1):
-    session = requests.session()
-    session.mount('https://', TLSAdapter())
     for i in range(max_retries):
         try:
-            response = session.get(url, headers={'User-Agent': random.choice(USER_AGENTS)})
+            session = requests.Session()
+            session.verify = False
+            response = session.get(url, verify=False, headers={'User-Agent': random.choice(USER_AGENTS)})
+            print(response)
             response.raise_for_status()
             return BeautifulSoup(response.text, 'html.parser')
         except Exception as e:
@@ -109,8 +105,10 @@ def get_soup(url):
         'Upgrade-Insecure-Requests': '1',
     }
     try:
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, headers=headers,verify=False)
+        print(response)
         response.raise_for_status()
+
         html_content = response.text
         
         logging.info(f"Fetched {len(html_content)} characters from {url}")
@@ -346,29 +344,12 @@ class TLSAdapter(HTTPAdapter):
 
 
 def scrape_pts_aviation():
-    url = "https://pts-aviation.com/engine-availability/"
-    session = requests.Session()
-    session.mount('https://', TLSAdapter())
+    url = "http://pts-aviation.com/engine-availability/"
+    logging.info(f"Fetching PTS Aviation page: {url}")
     
-    try:
-        response = session.get(url, timeout=30)
-        response.raise_for_status()
-        logging.info(f"Fetching PTS Aviation page: {url}")
-    
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            'Accept-Language': 'en-US,en;q=0.5',
-            'Referer': 'https://www.google.com/',
-            'DNT': '1',
-            'Connection': 'keep-alive',
-            'Upgrade-Insecure-Requests': '1',
-        }
-        # response = requests.get(url, headers=headers, timeout=30)
-        # response.raise_for_status()
-        soup = BeautifulSoup(response.text, 'html.parser')
-    except requests.RequestException as e:
-        logging.error(f"Error fetching PTS Aviation page: {e}")
+    soup = scrape_with_backoff(url)
+    if not soup:
+        logging.error("Failed to fetch PTS Aviation page")
         return []
 
     table = soup.find('table', class_='avia-table')
@@ -385,13 +366,20 @@ def scrape_pts_aviation():
             continue
 
         model = cells[1].text.strip()
+        option = cells[7].text.strip().lower()
         
-        # Check if the engine model is in our desired list
+        # Check if the engine model is in our desired list and is for sale
         if not any(model.startswith(engine) for engine in DESIRED_ENGINES):
+            continue
+        
+        # Only include engines that are for sale (excluding "SOLD" and "On Lease")
+        if "sold" in option or "on lease" in option:
+            continue
+        
+        if "sale" not in option and "pending" not in option:
             continue
 
         status = cells[5].text.strip()
-        option = cells[7].text.strip()
 
         engine_info = {
             'Engine Mode': model,
@@ -410,12 +398,12 @@ def scrape_pts_aviation():
             'Listing Source': 'PTS Aviation',
             'Listing Link': url,
             'Date Found': datetime.now().strftime("%Y-%m-%d"),
-            'For Sale': 'Yes' if option.lower() in ['sale pending', 'for sale'] else 'No'
+            'For Sale': 'Yes'
         }
 
         engine_data.append(engine_info)
 
-    logging.info(f"Scraped {len(engine_data)} engine listings from PTS Aviation")
+    logging.info(f"Scraped {len(engine_data)} engine listings for sale from PTS Aviation")
     return engine_data
 
 def scrape_aeroconnect():
@@ -693,10 +681,10 @@ def export_to_csv(data, filename):
     logging.info(f"Data exported to {filename}") 
 
 RECIPIENT_EMAILS = [
-    # "ceo@arengineering.tech",
-    # "momendaoud07@gmail.com",
-    # "ahmed@impoweredlab.com"
-    "momenfbi123@gmail.com"
+    "ceo@arengineering.tech",
+    "momendaoud07@gmail.com",
+    "ahmed@impoweredlab.com",
+    # "momenfbi123@gmail.com"
 ]   
 
 def send_email_notification(html_content, attachment_filename=None):
@@ -894,11 +882,9 @@ if __name__ == "__main__":
     
      # Start the Flask app in a separate thread
 
-        pts_aviation_data = scrape_pts_aviation()
-        print(pts_aviation_data)
         threading.Thread(target=run_flask, daemon=True).start()
 
-        run_times = ["11:35"]  # Example: Run twice a day at 8 AM and 8 PM
+        run_times = ["04:00"]  # Example: Run twice a day at 8 AM and 8 PM
         
         schedule_scraper(run_times)
         
