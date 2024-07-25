@@ -1,4 +1,175 @@
 {
+  "CFM56-3B1_United States_Locatory_AR": {
+    "Engine Mode": "CFM56-3B1",
+    "Condition": "AR",
+    "Thrust Rating": "N/A",
+    "TSN": "N/A",
+    "CSN": "N/A",
+    "TSO": "N/A",
+    "CSO": "N/A",
+    "Location": "United States",
+    "Availability": "Now",
+    "Documentation": "N/A",
+    "Last Shop Visit": "N/A",
+    "Price": "N/A",
+    "Contact Information": "Contact through Locatory",
+    "Listing Source": "Locatory",
+    "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-3B1?id=11342870516&utm_id=&utm_source=",
+    "Date Found": "2024-07-25",
+    "For Sale": "Yes"
+  },
+  "CFM56-5A100M0D06_United States_Locatory_NS": {
+    "Engine Mode": "CFM56-5A100M0D06",
+    "Condition": "NS",
+    "Thrust Rating": "N/A",
+    "TSN": "N/A",
+    "CSN": "N/A",
+    "TSO": "N/A",
+    "CSO": "N/A",
+    "Location": "United States",
+    "Availability": "Now",
+    "Documentation": "N/A",
+    "Last Shop Visit": "N/A",
+    "Price": "N/A",
+    "Contact Information": "Contact through Locatory",
+    "Listing Source": "Locatory",
+    "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-5A100M0D06?id=11339149310&utm_id=&utm_source=",
+    "Date Found": "2024-07-25",
+    "For Sale": "Yes"
+  },
+  "CFM56-5A100M0D10_United States_Locatory_NS": {
+    "Engine Mode": "CFM56-5A100M0D10",
+    "Condition": "NS",
+    "Thrust Rating": "N/A",
+    "TSN": "N/A",
+    "CSN": "N/A",
+    "TSO": "N/A",
+    "CSO": "N/A",
+    "Location": "United States",
+    "Availability": "Now",
+    "Documentation": "N/A",
+    "Last Shop Visit": "N/A",
+    "Price": "N/A",
+    "Contact Information": "Contact through Locatory",
+    "Listing Source": "Locatory",
+    "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-5A100M0D10?id=11339149311&utm_id=&utm_source=",
+    "Date Found": "2024-07-25",
+    "For Sale": "Yes"
+  },
+  "CFM56-3C1_United States_Locatory_AR": {
+    "Engine Mode": "CFM56-3C1",
+    "Condition": "AR",
+    "Thrust Rating": "N/A",
+    "TSN": "N/A",
+    "CSN": "N/A",
+    "TSO": "N/A",
+    "CSO": "N/A",
+    "Location": "United States",
+    "Availability": "Now",
+    "Documentation": "N/A",
+    "Last Shop Visit": "N/A",
+    "Price": "N/A",
+    "Contact Information": "Contact through Locatory",
+    "Listing Source": "Locatory",
+    "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-3C1?id=11337921517&utm_id=&utm_source=",
+    "Date Found": "2024-07-25",
+    "For Sale": "Yes"
+  },
+  "CFM56-3B1_United States_Locatory_RP": {
+    "Engine Mode": "CFM56-3B1",
+    "Condition": "RP",
+    "Thrust Rating": "N/A",
+    "TSN": "N/A",
+    "CSN": "N/A",
+    "TSO": "N/A",
+    "CSO": "N/A",
+    "Location": "United States",
+    "Availability": "Now",
+    "Documentation": "N/A",
+    "Last Shop Visit": "N/A",
+    "Price": "N/A",
+    "Contact Information": "Contact through Locatory",
+    "Listing Source": "Locatory",
+    "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-3B1?id=11337882976&utm_id=&utm_source=",
+    "Date Found": "2024-07-25",
+    "For Sale": "Yes"
+  },
+  "CFM56-7B22_United States_Locatory_RP": {
+    "Engine Mode": "CFM56-7B22",
+    "Condition": "RP",
+    "Thrust Rating": "N/A",
+    "TSN": "N/A",
+    "CSN": "N/A",
+    "TSO": "N/A",
+    "CSO": "N/A",
+    "Location": "United States",
+    "Availability": "Now",
+    "Documentation": "N/A",
+    "Last Shop Visit": "N/A",
+    "Price": "N/A",
+    "Contact Information": "Contact through Locatory",
+    "Listing Source": "Locatory",
+    "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-7B22?id=11337883013&utm_id=&utm_source=",
+    "Date Found": "2024-07-25",
+    "For Sale": "Yes"
+  },
+  "CFM56-5A1_United States_Locatory_RP": {
+    "Engine Mode": "CFM56-5A1",
+    "Condition": "RP",
+    "Thrust Rating": "N/A",
+    "TSN": "N/A",
+    "CSN": "N/A",
+    "TSO": "N/A",
+    "CSO": "N/A",
+    "Location": "United States",
+    "Availability": "Now",
+    "Documentation": "N/A",
+    "Last Shop Visit": "N/A",
+    "Price": "N/A",
+    "Contact Information": "Contact through Locatory",
+    "Listing Source": "Locatory",
+    "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-5A1?id=11337882977&utm_id=&utm_source=",
+    "Date Found": "2024-07-25",
+    "For Sale": "Yes"
+  },
+  "CFM56-7B24_United States_Locatory_RP": {
+    "Engine Mode": "CFM56-7B24",
+    "Condition": "RP",
+    "Thrust Rating": "N/A",
+    "TSN": "N/A",
+    "CSN": "N/A",
+    "TSO": "N/A",
+    "CSO": "N/A",
+    "Location": "United States",
+    "Availability": "Now",
+    "Documentation": "N/A",
+    "Last Shop Visit": "N/A",
+    "Price": "N/A",
+    "Contact Information": "Contact through Locatory",
+    "Listing Source": "Locatory",
+    "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-7B24?id=11337883017&utm_id=&utm_source=",
+    "Date Found": "2024-07-25",
+    "For Sale": "Yes"
+  },
+  "CFM56-7B26_United States_Locatory_RP": {
+    "Engine Mode": "CFM56-7B26",
+    "Condition": "RP",
+    "Thrust Rating": "N/A",
+    "TSN": "N/A",
+    "CSN": "N/A",
+    "TSO": "N/A",
+    "CSO": "N/A",
+    "Location": "United States",
+    "Availability": "Now",
+    "Documentation": "N/A",
+    "Last Shop Visit": "N/A",
+    "Price": "N/A",
+    "Contact Information": "Contact through Locatory",
+    "Listing Source": "Locatory",
+    "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-7B26?id=11337883019&utm_id=&utm_source=",
+    "Date Found": "2024-07-25",
+    "For Sale": "Yes"
+  },
   "CFM56-3B1_Lithuania_Locatory_AR": {
     "Engine Mode": "CFM56-3B1",
     "Condition": "AR",
@@ -15,7 +186,7 @@
     "Contact Information": "Contact through Locatory",
     "Listing Source": "Locatory",
     "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-3B1?id=11323141369&utm_id=&utm_source=",
-    "Date Found": "2024-07-18",
+    "Date Found": "2024-07-25",
     "For Sale": "Yes"
   },
   "CFM56-3B2_Lithuania_Locatory_AR": {
@@ -34,7 +205,7 @@
     "Contact Information": "Contact through Locatory",
     "Listing Source": "Locatory",
     "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-3B2?id=11323141375&utm_id=&utm_source=",
-    "Date Found": "2024-07-18",
+    "Date Found": "2024-07-25",
     "For Sale": "Yes"
   },
   "CFM56-5A3_Lithuania_Locatory_AR": {
@@ -53,7 +224,7 @@
     "Contact Information": "Contact through Locatory",
     "Listing Source": "Locatory",
     "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-5A3?id=11323141388&utm_id=&utm_source=",
-    "Date Found": "2024-07-18",
+    "Date Found": "2024-07-25",
     "For Sale": "Yes"
   },
   "CFM56-3B2_Lithuania_Locatory_NA": {
@@ -72,7 +243,7 @@
     "Contact Information": "Contact through Locatory",
     "Listing Source": "Locatory",
     "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-3B2?id=11323141376&utm_id=&utm_source=",
-    "Date Found": "2024-07-18",
+    "Date Found": "2024-07-25",
     "For Sale": "Yes"
   },
   "CFM56-7B26_Lithuania_Locatory_NA": {
@@ -91,7 +262,7 @@
     "Contact Information": "Contact through Locatory",
     "Listing Source": "Locatory",
     "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-7B26?id=11323141390&utm_id=&utm_source=",
-    "Date Found": "2024-07-18",
+    "Date Found": "2024-07-25",
     "For Sale": "Yes"
   },
   "CFM56-7B27_Lithuania_Locatory_NA": {
@@ -110,7 +281,7 @@
     "Contact Information": "Contact through Locatory",
     "Listing Source": "Locatory",
     "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-7B27?id=11323141391&utm_id=&utm_source=",
-    "Date Found": "2024-07-18",
+    "Date Found": "2024-07-25",
     "For Sale": "Yes"
   },
   "CFM56-3B1_Lithuania_Locatory_SV": {
@@ -129,7 +300,7 @@
     "Contact Information": "Contact through Locatory",
     "Listing Source": "Locatory",
     "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-3B1?id=11323141370&utm_id=&utm_source=",
-    "Date Found": "2024-07-18",
+    "Date Found": "2024-07-25",
     "For Sale": "Yes"
   },
   "CFM56-3B2_Lithuania_Locatory_SV": {
@@ -148,140 +319,7 @@
     "Contact Information": "Contact through Locatory",
     "Listing Source": "Locatory",
     "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-3B2?id=11323141377&utm_id=&utm_source=",
-    "Date Found": "2024-07-18",
-    "For Sale": "Yes"
-  },
-  "CFM56-3C1_United States_Locatory_AR": {
-    "Engine Mode": "CFM56-3C1",
-    "Condition": "AR",
-    "Thrust Rating": "N/A",
-    "TSN": "N/A",
-    "CSN": "N/A",
-    "TSO": "N/A",
-    "CSO": "N/A",
-    "Location": "United States",
-    "Availability": "Now",
-    "Documentation": "N/A",
-    "Last Shop Visit": "N/A",
-    "Price": "N/A",
-    "Contact Information": "Contact through Locatory",
-    "Listing Source": "Locatory",
-    "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-3C1?id=11321951360&utm_id=&utm_source=",
-    "Date Found": "2024-07-18",
-    "For Sale": "Yes"
-  },
-  "CFM56-3B1_United States_Locatory_RP": {
-    "Engine Mode": "CFM56-3B1",
-    "Condition": "RP",
-    "Thrust Rating": "N/A",
-    "TSN": "N/A",
-    "CSN": "N/A",
-    "TSO": "N/A",
-    "CSO": "N/A",
-    "Location": "United States",
-    "Availability": "Now",
-    "Documentation": "N/A",
-    "Last Shop Visit": "N/A",
-    "Price": "N/A",
-    "Contact Information": "Contact through Locatory",
-    "Listing Source": "Locatory",
-    "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-3B1?id=11321970599&utm_id=&utm_source=",
-    "Date Found": "2024-07-18",
-    "For Sale": "Yes"
-  },
-  "CFM56-7B22_United States_Locatory_RP": {
-    "Engine Mode": "CFM56-7B22",
-    "Condition": "RP",
-    "Thrust Rating": "N/A",
-    "TSN": "N/A",
-    "CSN": "N/A",
-    "TSO": "N/A",
-    "CSO": "N/A",
-    "Location": "United States",
-    "Availability": "Now",
-    "Documentation": "N/A",
-    "Last Shop Visit": "N/A",
-    "Price": "N/A",
-    "Contact Information": "Contact through Locatory",
-    "Listing Source": "Locatory",
-    "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-7B22?id=11321970636&utm_id=&utm_source=",
-    "Date Found": "2024-07-18",
-    "For Sale": "Yes"
-  },
-  "CFM56-5A1_United States_Locatory_RP": {
-    "Engine Mode": "CFM56-5A1",
-    "Condition": "RP",
-    "Thrust Rating": "N/A",
-    "TSN": "N/A",
-    "CSN": "N/A",
-    "TSO": "N/A",
-    "CSO": "N/A",
-    "Location": "United States",
-    "Availability": "Now",
-    "Documentation": "N/A",
-    "Last Shop Visit": "N/A",
-    "Price": "N/A",
-    "Contact Information": "Contact through Locatory",
-    "Listing Source": "Locatory",
-    "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-5A1?id=11321970600&utm_id=&utm_source=",
-    "Date Found": "2024-07-18",
-    "For Sale": "Yes"
-  },
-  "CFM56-7B24_United States_Locatory_RP": {
-    "Engine Mode": "CFM56-7B24",
-    "Condition": "RP",
-    "Thrust Rating": "N/A",
-    "TSN": "N/A",
-    "CSN": "N/A",
-    "TSO": "N/A",
-    "CSO": "N/A",
-    "Location": "United States",
-    "Availability": "Now",
-    "Documentation": "N/A",
-    "Last Shop Visit": "N/A",
-    "Price": "N/A",
-    "Contact Information": "Contact through Locatory",
-    "Listing Source": "Locatory",
-    "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-7B24?id=11321970640&utm_id=&utm_source=",
-    "Date Found": "2024-07-18",
-    "For Sale": "Yes"
-  },
-  "CFM56-7B26_United States_Locatory_RP": {
-    "Engine Mode": "CFM56-7B26",
-    "Condition": "RP",
-    "Thrust Rating": "N/A",
-    "TSN": "N/A",
-    "CSN": "N/A",
-    "TSO": "N/A",
-    "CSO": "N/A",
-    "Location": "United States",
-    "Availability": "Now",
-    "Documentation": "N/A",
-    "Last Shop Visit": "N/A",
-    "Price": "N/A",
-    "Contact Information": "Contact through Locatory",
-    "Listing Source": "Locatory",
-    "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-7B26?id=11321970642&utm_id=&utm_source=",
-    "Date Found": "2024-07-18",
-    "For Sale": "Yes"
-  },
-  "CFM56-3B1_United States_Locatory_AR": {
-    "Engine Mode": "CFM56-3B1",
-    "Condition": "AR",
-    "Thrust Rating": "N/A",
-    "TSN": "N/A",
-    "CSN": "N/A",
-    "TSO": "N/A",
-    "CSO": "N/A",
-    "Location": "United States",
-    "Availability": "Now",
-    "Documentation": "N/A",
-    "Last Shop Visit": "N/A",
-    "Price": "N/A",
-    "Contact Information": "Contact through Locatory",
-    "Listing Source": "Locatory",
-    "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-3B1?id=11320799746&utm_id=&utm_source=",
-    "Date Found": "2024-07-18",
+    "Date Found": "2024-07-25",
     "For Sale": "Yes"
   },
   "CFM56-3C1_United States_Locatory_NA": {
@@ -300,7 +338,7 @@
     "Contact Information": "Contact through Locatory",
     "Listing Source": "Locatory",
     "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-3C1?id=11298326519&utm_id=&utm_source=",
-    "Date Found": "2024-07-18",
+    "Date Found": "2024-07-25",
     "For Sale": "Yes"
   },
   "CFM56-3C1_United States_Locatory_SV": {
@@ -319,45 +357,7 @@
     "Contact Information": "Contact through Locatory",
     "Listing Source": "Locatory",
     "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-3C1?id=10063878602&utm_id=&utm_source=",
-    "Date Found": "2024-07-18",
-    "For Sale": "Yes"
-  },
-  "CFM56-5A100M0D06_United States_Locatory_NS": {
-    "Engine Mode": "CFM56-5A100M0D06",
-    "Condition": "NS",
-    "Thrust Rating": "N/A",
-    "TSN": "N/A",
-    "CSN": "N/A",
-    "TSO": "N/A",
-    "CSO": "N/A",
-    "Location": "United States",
-    "Availability": "Now",
-    "Documentation": "N/A",
-    "Last Shop Visit": "N/A",
-    "Price": "N/A",
-    "Contact Information": "Contact through Locatory",
-    "Listing Source": "Locatory",
-    "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-5A100M0D06?id=11288215242&utm_id=&utm_source=",
-    "Date Found": "2024-07-18",
-    "For Sale": "Yes"
-  },
-  "CFM56-5A100M0D10_United States_Locatory_NS": {
-    "Engine Mode": "CFM56-5A100M0D10",
-    "Condition": "NS",
-    "Thrust Rating": "N/A",
-    "TSN": "N/A",
-    "CSN": "N/A",
-    "TSO": "N/A",
-    "CSO": "N/A",
-    "Location": "United States",
-    "Availability": "Now",
-    "Documentation": "N/A",
-    "Last Shop Visit": "N/A",
-    "Price": "N/A",
-    "Contact Information": "Contact through Locatory",
-    "Listing Source": "Locatory",
-    "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-5A100M0D10?id=11288215243&utm_id=&utm_source=",
-    "Date Found": "2024-07-18",
+    "Date Found": "2024-07-25",
     "For Sale": "Yes"
   },
   "CFM56-3C1_United Arab Emirates_Locatory_RP": {
@@ -376,7 +376,7 @@
     "Contact Information": "Contact through Locatory",
     "Listing Source": "Locatory",
     "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-3C1?id=11231232141&utm_id=&utm_source=",
-    "Date Found": "2024-07-18",
+    "Date Found": "2024-07-25",
     "For Sale": "Yes"
   },
   "CFM56-7B26_United States_Locatory_AR": {
@@ -395,7 +395,7 @@
     "Contact Information": "Contact through Locatory",
     "Listing Source": "Locatory",
     "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-7B26?id=11196925021&utm_id=&utm_source=",
-    "Date Found": "2024-07-18",
+    "Date Found": "2024-07-25",
     "For Sale": "Yes"
   },
   "CFM56-7B26E_United States_Locatory_NA": {
@@ -414,7 +414,7 @@
     "Contact Information": "Contact through Locatory",
     "Listing Source": "Locatory",
     "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-7B26E?id=11196908809&utm_id=&utm_source=",
-    "Date Found": "2024-07-18",
+    "Date Found": "2024-07-25",
     "For Sale": "Yes"
   },
   "CFM56-7B26_Ireland_Locatory_SV": {
@@ -433,7 +433,7 @@
     "Contact Information": "Contact through Locatory",
     "Listing Source": "Locatory",
     "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-7B26?id=10987014915&utm_id=&utm_source=",
-    "Date Found": "2024-07-18",
+    "Date Found": "2024-07-25",
     "For Sale": "Yes"
   },
   "CFM56-3B1_Netherlands_Locatory_NA": {
@@ -452,7 +452,7 @@
     "Contact Information": "Contact through Locatory",
     "Listing Source": "Locatory",
     "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-3B1?id=9548083930&utm_id=&utm_source=",
-    "Date Found": "2024-07-18",
+    "Date Found": "2024-07-25",
     "For Sale": "Yes"
   },
   "CFM56-3B2_Netherlands_Locatory_NA": {
@@ -471,7 +471,7 @@
     "Contact Information": "Contact through Locatory",
     "Listing Source": "Locatory",
     "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-3B2?id=9548083931&utm_id=&utm_source=",
-    "Date Found": "2024-07-18",
+    "Date Found": "2024-07-25",
     "For Sale": "Yes"
   },
   "CFM56-5A1_Netherlands_Locatory_NA": {
@@ -490,7 +490,7 @@
     "Contact Information": "Contact through Locatory",
     "Listing Source": "Locatory",
     "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-5A1?id=9548083935&utm_id=&utm_source=",
-    "Date Found": "2024-07-18",
+    "Date Found": "2024-07-25",
     "For Sale": "Yes"
   },
   "CFM56-5A3_Netherlands_Locatory_NA": {
@@ -509,7 +509,7 @@
     "Contact Information": "Contact through Locatory",
     "Listing Source": "Locatory",
     "Listing Link": "https://www.locatory.com/search/aircraft-part/CFM56-5A3?id=9548083936&utm_id=&utm_source=",
-    "Date Found": "2024-07-18",
+    "Date Found": "2024-07-25",
     "For Sale": "Yes"
   },
   "CFM56-7B26_N/A_MyAirTrade_Serviceable": {
@@ -529,7 +529,7 @@
     "Phone": "+1 773 397 6238",
     "Listing Source": "MyAirTrade",
     "Listing Link": "https://www.myairtrade.com/available/CFM56-7",
-    "Date Found": "18-07-2024",
+    "Date Found": "25-07-2024",
     "For Sale": "Yes"
   },
   "CFM56-7B27_N/A_MyAirTrade_Serviceable": {
@@ -549,7 +549,7 @@
     "Phone": "+1 773 397 6238",
     "Listing Source": "MyAirTrade",
     "Listing Link": "https://www.myairtrade.com/available/CFM56-7",
-    "Date Found": "18-07-2024",
+    "Date Found": "25-07-2024",
     "For Sale": "Yes"
   },
   "CFM56-7B26_N/A_MyAirTrade_N/A": {
@@ -569,7 +569,7 @@
     "Phone": "N/A",
     "Listing Source": "MyAirTrade",
     "Listing Link": "https://www.myairtrade.com/available/CFM56-7",
-    "Date Found": "18-07-2024",
+    "Date Found": "25-07-2024",
     "For Sale": "Yes"
   },
   "CFM56-7B24_N/A_MyAirTrade_N/A": {
@@ -589,7 +589,7 @@
     "Phone": "+82 10 6440 3840",
     "Listing Source": "MyAirTrade",
     "Listing Link": "https://www.myairtrade.com/available/CFM56-7",
-    "Date Found": "18-07-2024",
+    "Date Found": "25-07-2024",
     "For Sale": "No"
   },
   "CFM567B27_N/A_MyAirTrade_N/A": {
@@ -609,7 +609,7 @@
     "Phone": "+44 7583 096 697",
     "Listing Source": "MyAirTrade",
     "Listing Link": "https://www.myairtrade.com/available/CFM56-7",
-    "Date Found": "18-07-2024",
+    "Date Found": "25-07-2024",
     "For Sale": "Yes"
   },
   "CFM56-7B26E_N/A_MyAirTrade_N/A": {
@@ -629,7 +629,7 @@
     "Phone": "+44 7583 096 697",
     "Listing Source": "MyAirTrade",
     "Listing Link": "https://www.myairtrade.com/available/CFM56-7",
-    "Date Found": "18-07-2024",
+    "Date Found": "25-07-2024",
     "For Sale": "Yes"
   },
   "CFM56-7B27E_the USA (Florida, Miami)_MyAirTrade_Serviceable": {
@@ -649,7 +649,7 @@
     "Phone": "+1 925 212 2624",
     "Listing Source": "MyAirTrade",
     "Listing Link": "https://www.myairtrade.com/available/CFM56-7",
-    "Date Found": "18-07-2024",
+    "Date Found": "25-07-2024",
     "For Sale": "No"
   },
   "CFM56-7B27/3_N/A_MyAirTrade_N/A": {
@@ -669,7 +669,7 @@
     "Phone": "+1 415 486 6100",
     "Listing Source": "MyAirTrade",
     "Listing Link": "https://www.myairtrade.com/available/CFM56-7",
-    "Date Found": "18-07-2024",
+    "Date Found": "25-07-2024",
     "For Sale": "No"
   },
   "CFM56-7B27_N/A_MyAirTrade_N/A": {
@@ -689,7 +689,7 @@
     "Phone": "N/A",
     "Listing Source": "MyAirTrade",
     "Listing Link": "https://www.myairtrade.com/available/CFM56-7",
-    "Date Found": "18-07-2024",
+    "Date Found": "25-07-2024",
     "For Sale": "No"
   },
   "CFM56-7B26-3_N/A_MyAirTrade_N/A": {
@@ -709,7 +709,54 @@
     "Phone": "+31 682 068 342",
     "Listing Source": "MyAirTrade",
     "Listing Link": "https://www.myairtrade.com/available/CFM56-7",
-    "Date Found": "18-07-2024",
+    "Date Found": "25-07-2024",
     "For Sale": "Yes"
+  },
+  "CFM56-3C1 Engine_N/A_S7 Aerospace_N/A": {
+    "Engine Mode": "CFM56-3C1 Engine",
+    "Condition": "N/A",
+    "Thrust Rating": "N/A",
+    "TSN": "N/A",
+    "CSN": "N/A",
+    "TSO": "N/A",
+    "CSO": "N/A",
+    "Location": "N/A",
+    "Availability": "N/A",
+    "Documentation": "N/A",
+    "Last Shop Visit": "N/A",
+    "Price": "N/A",
+    "Contact Information": "N/A",
+    "Listing Source": "S7 Aerospace",
+    "Listing Link": "https://s7aerospace.com/engines/cfm56-3c1/",
+    "Date Found": "2024-07-25",
+    "For Sale": "Yes"
+  },
+  "CFM CFM56-5_Fort Lauderdale, FL USA_Trade-A-Plane_Not Listed": {
+    "Engine Mode": "CFM CFM56-5",
+    "Condition": "Not Listed",
+    "TSN": "4817,13",
+    "CSN": "1058",
+    "Location": "Fort Lauderdale, FL USA",
+    "Price": "Call for Price",
+    "Seller": "S7Aerospace",
+    "Phone": "(305) 753-5572",
+    "Listing Link": "https://www.trade-a-plane.com/search?category_level1=Piston+Engine&make=CFM&model=CFM56-5&listing_id=2397956&s-type=engine",
+    "Listing Source": "Trade-A-Plane",
+    "Last Update": "03/05/2024",
+    "Status": "For Sale"
+  },
+  "HONEYWELL CFM 56-3C1_Fort Lauderdale, FL USA_Trade-A-Plane_Not Listed": {
+    "Engine Mode": "HONEYWELL CFM 56-3C1",
+    "Condition": "Not Listed",
+    "TSN": "Not Listed",
+    "CSN": "Not Listed",
+    "Location": "Fort Lauderdale, FL USA",
+    "Price": "Call for Price",
+    "Seller": "S7Aerospace",
+    "Phone": "(305) 753-5572",
+    "Listing Link": "https://www.trade-a-plane.com/search?category_level1=Turbine+Engine&make=HONEYWELL&model=CFM+56-3C1&listing_id=2391687&s-type=engine",
+    "Listing Source": "Trade-A-Plane",
+    "Last Update": "01/24/2023",
+    "Status": "For Sale"
   }
 }

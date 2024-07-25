@@ -1,8 +1,14 @@
 import json
+import ssl
 import requests
 from flask import Flask
+from requests.adapters import HTTPAdapter
+from urllib3.util.ssl_ import create_urllib3_context
 import threading
+
+from urllib3 import poolmanager
 # import fcntl
+import urllib3      
 import sys
 import re
 import os
@@ -18,7 +24,12 @@ import schedule
 import time
 import random
 from requests.exceptions import RequestException
-
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 # Configuration
 VALID_ENGINES = [
     "CFM56-3B1", "CFM56-3B2", "CFM56-3C1", "CFM56-5A1", "CFM56-5A3",
@@ -59,12 +70,18 @@ def run_flask():
     app.run(host='0.0.0.0', port=8080)
 
     
+
+
+
+
 def scrape_with_backoff(url, max_retries=5, base_delay=1):
+    session = requests.session()
+    session.mount('https://', TLSAdapter())
     for i in range(max_retries):
         try:
-            soup = get_soup(url)
-            if soup:
-                return soup
+            response = session.get(url, headers={'User-Agent': random.choice(USER_AGENTS)})
+            response.raise_for_status()
+            return BeautifulSoup(response.text, 'html.parser')
         except Exception as e:
             wait_time = (base_delay * (2 ** i)) + (random.randint(0, 1000) / 1000)
             logging.warning(f"Attempt {i+1} failed. Waiting for {wait_time:.2f} seconds. Error: {e}")
@@ -316,6 +333,90 @@ def scrape_trade_a_plane():
     logging.info(f"Scraped {len(engine_data)} engine listings from Trade-A-Plane")
     return engine_data
 
+import requests
+from bs4 import BeautifulSoup
+import logging
+from datetime import datetime
+
+class TLSAdapter(HTTPAdapter):
+    def init_poolmanager(self, *args, **kwargs):
+        context = create_urllib3_context(ssl_version=ssl.PROTOCOL_TLS)
+        kwargs['ssl_context'] = context
+        return super(TLSAdapter, self).init_poolmanager(*args, **kwargs)
+
+
+def scrape_pts_aviation():
+    url = "https://pts-aviation.com/engine-availability/"
+    session = requests.Session()
+    session.mount('https://', TLSAdapter())
+    
+    try:
+        response = session.get(url, timeout=30)
+        response.raise_for_status()
+        logging.info(f"Fetching PTS Aviation page: {url}")
+    
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+            'Accept-Language': 'en-US,en;q=0.5',
+            'Referer': 'https://www.google.com/',
+            'DNT': '1',
+            'Connection': 'keep-alive',
+            'Upgrade-Insecure-Requests': '1',
+        }
+        # response = requests.get(url, headers=headers, timeout=30)
+        # response.raise_for_status()
+        soup = BeautifulSoup(response.text, 'html.parser')
+    except requests.RequestException as e:
+        logging.error(f"Error fetching PTS Aviation page: {e}")
+        return []
+
+    table = soup.find('table', class_='avia-table')
+    if not table:
+        logging.error("Could not find the engine availability table")
+        return []
+
+    rows = table.find_all('tr')[1:]  # Skip the header row
+    engine_data = []
+
+    for row in rows:
+        cells = row.find_all('td')
+        if len(cells) < 8:
+            continue
+
+        model = cells[1].text.strip()
+        
+        # Check if the engine model is in our desired list
+        if not any(model.startswith(engine) for engine in DESIRED_ENGINES):
+            continue
+
+        status = cells[5].text.strip()
+        option = cells[7].text.strip()
+
+        engine_info = {
+            'Engine Mode': model,
+            'Condition': status,
+            'Thrust Rating': cells[2].text.strip(),
+            'TSN': 'N/A',  # Not provided in the table
+            'CSN': cells[3].text.strip(),  # Assuming CYCLES REM is equivalent to CSN
+            'TSO': 'N/A',  # Not provided in the table
+            'CSO': 'N/A',  # Not provided in the table
+            'Location': 'N/A',  # Not provided in the table
+            'Availability': cells[6].text.strip(),
+            'Documentation': 'N/A',  # Not provided in the table
+            'Last Shop Visit': 'N/A',  # Not provided in the table
+            'Price': 'N/A',  # Not provided in the table
+            'Contact Information': 'N/A',  # Not provided in the table
+            'Listing Source': 'PTS Aviation',
+            'Listing Link': url,
+            'Date Found': datetime.now().strftime("%Y-%m-%d"),
+            'For Sale': 'Yes' if option.lower() in ['sale pending', 'for sale'] else 'No'
+        }
+
+        engine_data.append(engine_info)
+
+    logging.info(f"Scraped {len(engine_data)} engine listings from PTS Aviation")
+    return engine_data
 
 def scrape_aeroconnect():
     base_url = "https://www.aeroconnect.com/listings-for-sale-or-lease/engines/cfm56-7b/"
@@ -592,9 +693,10 @@ def export_to_csv(data, filename):
     logging.info(f"Data exported to {filename}") 
 
 RECIPIENT_EMAILS = [
-    "ceo@arengineering.tech",
-    "momenfbi123@gmail.com",
-    "ahmed@impoweredlab.com"
+    # "ceo@arengineering.tech",
+    # "momendaoud07@gmail.com",
+    # "ahmed@impoweredlab.com"
+    "momenfbi123@gmail.com"
 ]   
 
 def send_email_notification(html_content, attachment_filename=None):
@@ -681,7 +783,8 @@ def compare_and_update(new_data):
         'Locatory': [],
         'MyAirTrade': [],
         'S7 Aerospace': [],
-        'Trade-A-Plane': [] 
+        'Trade-A-Plane': [] ,
+        'PTS Aviation': []  # Add this line
     }
     
     # Process new engines
@@ -738,6 +841,9 @@ def run_scraper():
     
     trade_a_plane_data = scrape_trade_a_plane()  # New scraper
     all_engine_data.extend(trade_a_plane_data)
+
+    pts_aviation_data = scrape_pts_aviation()
+    all_engine_data.extend(pts_aviation_data)
     
     if all_engine_data:
         updates, removed_engines = compare_and_update(all_engine_data)
@@ -788,10 +894,11 @@ if __name__ == "__main__":
     
      # Start the Flask app in a separate thread
 
-    
+        pts_aviation_data = scrape_pts_aviation()
+        print(pts_aviation_data)
         threading.Thread(target=run_flask, daemon=True).start()
 
-        run_times = ["04:00"]  # Example: Run twice a day at 8 AM and 8 PM
+        run_times = ["11:35"]  # Example: Run twice a day at 8 AM and 8 PM
         
         schedule_scraper(run_times)
         
